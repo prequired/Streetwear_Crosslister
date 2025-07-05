@@ -1,0 +1,67 @@
+# Platform API Configuration
+platforms:
+  mercari:
+    enabled: true
+    api_key: ${MERCARI_API_KEY}
+    secret: ${MERCARI_SECRET}
+    access_token: ${MERCARI_ACCESS_TOKEN}
+    sandbox: ${MERCARI_SANDBOX:true}
+    rate_limit:
+      requests_per_minute: 100
+      burst_limit: 10
+    retry_config:
+      max_retries: 3
+      backoff_factor: 2
+      retry_on_status: [429, 500, 502, 503, 504]
+    
+  vinted:
+    enabled: true
+    client_id: ${VINTED_CLIENT_ID}
+    client_secret: ${VINTED_CLIENT_SECRET}
+    access_token: ${VINTED_ACCESS_TOKEN}
+    refresh_token: ${VINTED_REFRESH_TOKEN}
+    rate_limit:
+      requests_per_minute: 60
+      burst_limit: 5
+    retry_config:
+      max_retries: 3
+      backoff_factor: 2
+      retry_on_status: [429, 500, 502, 503, 504]
+    
+  facebook_marketplace:
+    enabled: true
+    app_id: ${FACEBOOK_APP_ID}
+    app_secret: ${FACEBOOK_APP_SECRET}
+    access_token: ${FACEBOOK_ACCESS_TOKEN}
+    page_id: ${FACEBOOK_PAGE_ID}
+    rate_limit:
+      requests_per_minute: 200
+      burst_limit: 20
+    retry_config:
+      max_retries: 3
+      backoff_factor: 2
+      retry_on_status: [429, 500, 502, 503, 504]
+
+# Global Configuration
+global:
+  default_currency: "USD"
+  max_photos_per_listing: 10
+  photo_upload_timeout: 30
+  sync_interval_minutes: 60
+  batch_size: 50
+  max_workers: 5
+  
+# Logging Configuration
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/cross_listing.log"
+  max_file_size: 10MB
+  backup_count: 5
+  
+# Cross-Listing Configuration
+cross_listing:
+  default_platforms: ["mercari"]
+  auto_sync_enabled: true
+  sync_on_startup: true
+  conflict_resolution: "manual"  # manual, automatic, latest_wins
